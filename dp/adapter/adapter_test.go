@@ -33,7 +33,7 @@ func TestAdapter(t *testing.T) {
 		}
 
 		if c.connector != Lightning {
-			t.Fatal("Adapter does not converts Lightning signal to USB")
+			t.Fatal("Adapter has not converts USB")
 		}
 
 	})
