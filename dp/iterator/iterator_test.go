@@ -10,7 +10,7 @@ func TestRecordShelf(t *testing.T) {
 		r := NewRecordShelf()
 		r.Append(sampleRecord)
 		if r.Next() != sampleRecord {
-			t.Fatal("Record could not append")
+			t.Fatal("The record could not append")
 		}
 	})
 
@@ -27,7 +27,7 @@ func TestRecordShelf(t *testing.T) {
 	t.Run("case GetItemAt method, has no items", func(t *testing.T) {
 		r := NewRecordShelf()
 		if r.GetItemAt(0) != nil {
-			t.Fatal("Record Shelf has items")
+			t.Fatal("The record shelf has items")
 		}
 	})
 

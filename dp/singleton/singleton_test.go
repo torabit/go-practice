@@ -11,7 +11,7 @@ func TestSingleton(t *testing.T) {
 		two := myclass.getInstance(2)
 
 		if one != two {
-			t.Fatal("instance does not same")
+			t.Fatal("The instance is not same")
 		}
 	})
 }

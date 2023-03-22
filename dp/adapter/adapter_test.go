@@ -15,7 +15,7 @@ func TestAdapter(t *testing.T) {
 		}
 
 		if c.connector != Lightning {
-			t.Fatal("Lightning connector does not plugged into mac machine")
+			t.Fatal("The connector is not Lightning")
 		}
 	})
 
@@ -33,7 +33,7 @@ func TestAdapter(t *testing.T) {
 		}
 
 		if c.connector != Lightning {
-			t.Fatal("Adapter has not converts USB")
+			t.Fatal("The connector does not adapt")
 		}
 
 	})
