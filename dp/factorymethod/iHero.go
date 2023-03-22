@@ -1,6 +1,6 @@
 package factorymethod
 
-type iHero interface {
+type IHero interface {
 	getName() string
 	getRole() Role
 	setName(name string)

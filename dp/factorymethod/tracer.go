@@ -4,7 +4,7 @@ type Tracer struct {
 	Hero
 }
 
-func newTracer() iHero {
+func newTracer() IHero {
 	return &Tracer{
 		Hero{
 			name: "Tracer",

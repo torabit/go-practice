@@ -18,6 +18,6 @@ type ComStatus struct {
 	connector Connector
 }
 
-type Computer interface {
+type IComputer interface {
 	InsertIntoLightningPort() *ComStatus
 }

@@ -4,7 +4,7 @@ type Kiriko struct {
 	Hero
 }
 
-func newKiriko() iHero {
+func newKiriko() IHero {
 	return &Kiriko{
 		Hero{
 			name: "Kiriko",

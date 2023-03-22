@@ -4,7 +4,7 @@ type Winston struct {
 	Hero
 }
 
-func newWinston() iHero {
+func newWinston() IHero {
 	return &Winston{
 		Hero{
 			name: "Winston",

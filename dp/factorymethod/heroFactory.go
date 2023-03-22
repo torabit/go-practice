@@ -2,7 +2,7 @@ package factorymethod
 
 import "fmt"
 
-func getHeroByName(name string) (iHero, error) {
+func getHeroByName(name string) (IHero, error) {
 
 	if name == "winston" {
 		return newWinston(), nil
@@ -18,7 +18,7 @@ func getHeroByName(name string) (iHero, error) {
 	return nil, fmt.Errorf("Wrong Hero name passed")
 }
 
-func getHeroByRole(role Role) (iHero, error) {
+func getHeroByRole(role Role) (IHero, error) {
 
 	if role == Tank {
 		return newWinston(), nil
