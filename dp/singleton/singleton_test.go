@@ -3,15 +3,22 @@ package singleton
 import "testing"
 
 func TestSingleton(t *testing.T) {
-	var myclass = &SingletonClass{}
-
 	t.Run("case The same instance", func(t *testing.T) {
+		isCreatedCh := make(chan bool)
+		defer close(isCreatedCh)
 
-		one := myclass.getInstance(1)
-		two := myclass.getInstance(2)
-
-		if one != two {
-			t.Fatal("The instance is not same")
+		for i := 0; i < 30; i++ {
+			go getInstance(isCreatedCh)
+			b := <-isCreatedCh
+			if i == 0 {
+				if b == true {
+					t.Fatal("The instance already created")
+				}
+			} else {
+				if b == false {
+					t.Fatal("The instance does not created")
+				}
+			}
 		}
 	})
 }

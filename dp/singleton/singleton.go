@@ -1,14 +1,26 @@
 package singleton
 
-type Singleton struct {
-	input int
-}
+import "sync"
 
-func (s *Singleton) getInstance(input int) *Singleton {
-	s.input = input
-	return s
-}
+var lock = &sync.Mutex{}
 
-type SingletonClass struct {
-	Singleton
+type single struct{}
+
+var singleInstance *single
+
+func getInstance(isCreatedCh chan<- bool) *single {
+
+	if singleInstance == nil {
+		lock.Lock()
+		defer lock.Unlock()
+		if singleInstance == nil {
+			isCreatedCh <- false
+			singleInstance = &single{}
+		} else {
+			isCreatedCh <- true
+		}
+	} else {
+		isCreatedCh <- true
+	}
+	return singleInstance
 }
