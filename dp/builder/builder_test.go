@@ -8,7 +8,7 @@ func TestBuilder(t *testing.T) {
 
 	director := newDirector(normalBuilder)
 
-	t.Run("case Normal House", func(t *testing.T) {
+	t.Run("case buildHouse method", func(t *testing.T) {
 		normalHouse := director.buildHouse()
 
 		if normalHouse.doorType != "Wooden Door" {
@@ -22,7 +22,7 @@ func TestBuilder(t *testing.T) {
 		}
 	})
 
-	t.Run("case Igloo House", func(t *testing.T) {
+	t.Run("case setBuilder method", func(t *testing.T) {
 		director.setBuilder(iglooBuilder)
 		iglooHouse := director.buildHouse()
 
