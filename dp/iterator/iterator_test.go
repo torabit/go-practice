@@ -52,7 +52,7 @@ func TestStudentCollection(t *testing.T) {
 		}
 	})
 
-	t.Run("case: for check out put", func(t *testing.T) {
+	t.Run("case: for check output", func(t *testing.T) {
 		expectedNames := []string{"横山 貴大", "相沢 萌"}
 
 		studentCollection := &StudentCollection{
