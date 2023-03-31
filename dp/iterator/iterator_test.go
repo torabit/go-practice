@@ -1,72 +1,72 @@
 package iterator
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
-func TestRecordShelf(t *testing.T) {
+func TestStudentCollection(t *testing.T) {
+	student1 := &Student{name: "横山 貴大", sex: Man}
+	student2 := &Student{name: "相沢 萌", sex: Woman}
 
-	sampleRecord := &Record{Id: 1, Title: "On & On", Artist: "Erykha Badu"}
+	t.Run("case: hasNext method, has student", func(t *testing.T) {
+		studentCollection := &StudentCollection{
+			students: []*Student{student1},
+		}
+		iterator := studentCollection.createIterator()
 
-	t.Run("case Append method", func(t *testing.T) {
-		r := NewRecordShelf()
-		r.Append(sampleRecord)
-		if r.Next() != sampleRecord {
-			t.Fatal("The record could not append")
+		if iterator.hasNext() != true {
+			t.Fatalf("\nwant: %+v\ngot: %+v\n", true, iterator.hasNext())
+		}
+
+	})
+
+	t.Run("case: hasNext method, has no student", func(t *testing.T) {
+		studentCollection := &StudentCollection{}
+		iterator := studentCollection.createIterator()
+
+		if iterator.hasNext() != false {
+			t.Fatalf("\nwant: %+v\ngot: %+v\n", false, iterator.hasNext())
 		}
 	})
 
-	t.Run("case GetSize method", func(t *testing.T) {
-		r := NewRecordShelf()
-		r.Append(sampleRecord)
-		r.Append(sampleRecord)
+	t.Run("case: Next method, does received student", func(t *testing.T) {
+		studentCollection := &StudentCollection{
+			students: []*Student{student1},
+		}
+		iterator := studentCollection.createIterator()
+		student := iterator.next()
 
-		if r.GetSize() != 2 {
-			t.Fatal("There is a difference in the number of records")
+		if !reflect.DeepEqual(student1, student) {
+			t.Fatalf("\nwant: %+v\ngot: %+v\n", student1, student)
 		}
 	})
 
-	t.Run("case GetItemAt method, has no items", func(t *testing.T) {
-		r := NewRecordShelf()
-		if r.GetItemAt(0) != nil {
-			t.Fatal("The record shelf has items")
+	t.Run("case: Next method, does not received student", func(t *testing.T) {
+		studentCollection := &StudentCollection{}
+		iterator := studentCollection.createIterator()
+		student := iterator.next()
+
+		if student != nil {
+			t.Fatalf("\nwant: %+v\ngot: %+v\n", nil, student)
 		}
 	})
 
-	t.Run("case GetItemAt method, has items", func(t *testing.T) {
-		r := NewRecordShelf()
-		r.Append(sampleRecord)
-		if r.GetItemAt(0) == nil {
-			t.Fatal("Record Shelf has no items")
+	t.Run("case: for check out put", func(t *testing.T) {
+		expectedNames := []string{"横山 貴大", "相沢 萌"}
+
+		studentCollection := &StudentCollection{
+			students: []*Student{student1, student2},
 		}
-	})
-
-}
-
-func TestRecordShelfIterator(t *testing.T) {
-
-	sampleRecord := &Record{Id: 1, Title: "On & On", Artist: "Erykha Badu"}
-	sampleRecord2 := &Record{Id: 2, Title: "FINAL DISTANCE", Artist: "Hikaru Utada"}
-
-	t.Run("case HasNext method, has next", func(t *testing.T) {
-		r := NewRecordShelf()
-		r.Append(sampleRecord)
-		if r.HasNext() != true {
-			t.Fatal("Record has no next")
+		iterator := studentCollection.createIterator()
+		var studentNames []string
+		for iterator.hasNext() {
+			name := iterator.next().name
+			studentNames = append(studentNames, name)
 		}
-	})
 
-	t.Run("case HasNext method, has no next", func(t *testing.T) {
-		r := NewRecordShelf()
-		if r.HasNext() != false {
-			t.Fatal("Record has next", r.Next())
-		}
-	})
-
-	t.Run("case Next method", func(t *testing.T) {
-		r := NewRecordShelf()
-		r.Append(sampleRecord)
-		r.Append(sampleRecord2)
-		if r.Next() != sampleRecord {
-			t.Fatal("The order of the records is different")
+		if !reflect.DeepEqual(studentNames, expectedNames) {
+			t.Fatalf("\nwant: %+v\ngot: %+v", studentNames, expectedNames)
 		}
 	})
 }
