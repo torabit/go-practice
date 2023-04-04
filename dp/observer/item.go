@@ -22,7 +22,7 @@ func (i *Item) register(o IObserver) {
 }
 
 func (i *Item) deregister(o IObserver) {
-	i.observerList = removeFromslice(i.observerList, o)
+	i.observerList = removeFromSlice(i.observerList, o)
 }
 
 func (i *Item) notifyAll() {
@@ -31,12 +31,12 @@ func (i *Item) notifyAll() {
 	}
 }
 
-func removeFromslice(observerList []IObserver, observerToRemove IObserver) []IObserver {
+func removeFromSlice(observerList []IObserver, observerToRemove IObserver) []IObserver {
 	observerListLength := len(observerList)
 	for i, observer := range observerList {
 		if observerToRemove.getID() == observer.getID() {
-			// 削除したいovserverをSliceの最後と入れ替える
-			observerList[observerListLength-1], observerList[i] = observerList[i], observerList[observerListLength-1]
+			// 削除したい要素にSliceの最後を上書き
+			observerList[i] = observerList[observerListLength-1]
 			// Sliceの最後以外を返す
 			return observerList[:observerListLength-1]
 		}
