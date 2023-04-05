@@ -3,11 +3,9 @@ package state
 import "testing"
 
 func TestState(t *testing.T) {
-	isCreatedCh := make(chan bool)
-	defer close(isCreatedCh)
-	go getDayStateInstance(isCreatedCh)
+	dayStateInstance := getDayStateInstance()
 
-	vaultFrame := &VaultFrame{currentState: singleDayState}
+	vaultFrame := &VaultFrame{currentState: dayStateInstance}
 
 	t.Run("case: use vault while at noon", func(t *testing.T) {
 		vaultFrame.use()

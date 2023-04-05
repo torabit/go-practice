@@ -6,29 +6,22 @@ type DayState struct{}
 
 var singleDayState *DayState
 
-func getDayStateInstance(isCreatedCh chan<- bool) *DayState {
+func getDayStateInstance() *DayState {
 	var lock = &sync.Mutex{}
 	if singleDayState == nil {
 		lock.Lock()
 		defer lock.Unlock()
 		if singleDayState == nil {
-			isCreatedCh <- false
 			singleDayState = &DayState{}
-		} else {
-			isCreatedCh <- true
 		}
-	} else {
-		isCreatedCh <- true
 	}
 	return singleDayState
 }
 
 func (d *DayState) doClock(c Context, hour int) {
 	if hour < 9 || 17 <= hour {
-		isCreatedCh := make(chan bool)
-		defer close(isCreatedCh)
-		go getNightStateInstance(isCreatedCh)
-		c.changeState(singleNightState)
+		nightStateInstance := getNightStateInstance()
+		c.changeState(nightStateInstance)
 	}
 }
 
