@@ -5,7 +5,6 @@
 ### Goroutineの中でClosureを実行するとどうなるか
 ```go
 	var wg sync.WaitGroup
-	salutationList := []string{}
 	for _, salutation := range []string{"hello", "greetings", "good day"} {
 		wg.Add(1)
 		// Goroutineが起動する前にLoop処理が終了されてしまう
@@ -27,7 +26,6 @@ good day
 このループを正しく動作させるためには、salutationのコピーをclosureに渡す必要がある
 ```go
 	var wg sync.WaitGroup
-	salutationList := []string{}
 	for _, salutation := range []string{"hello", "greetings", "good day"} {
 		wg.Add(1)
 		go func(salutation string) {
@@ -36,7 +34,6 @@ good day
 		}(salutation)
 	}
 	wg.Wait()
-	return salutationList
 ```
 この結果、次のように正しい出力を得る
 ```zhs
