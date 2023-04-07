@@ -2,6 +2,7 @@
 
 ### Sample code
 
+10個の要素をqueueに追加し、最後の2要素をqueueから取り出す前に終了するプログラム  
 ```go
 c := sync.NewCond(&sync.Mutex{})
 queue := make([]interface{}, 0, 10)
@@ -28,8 +29,8 @@ for i := 0; i < 10; i++ {
 ```
 
 普通、`removeFromQueue`の実行よりもmain goroutine のfor文の実行スピードの方が速い  
-しかし、以下の条件文で`Wait`が呼び出されると、main goroutineは条件のシグナルが送出されるまで一時停止される  
- 
+しかし、以下の条件で`Wait`が呼び出されると、main goroutineは条件のシグナルが送出されるまで一時停止される  
+
 ```go
 for len(queue) == 2 {
   c.Wait()
