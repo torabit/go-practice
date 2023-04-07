@@ -1,5 +1,3 @@
-# Package
-
 ## Cond
 
 ### Sample code
