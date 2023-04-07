@@ -3,33 +3,32 @@
 ### Sample code
 
 ```go
-	c := sync.NewCond(&sync.Mutex{})
-	queue := make([]interface{}, 0, 10)
+c := sync.NewCond(&sync.Mutex{})
+queue := make([]interface{}, 0, 10)
 
-	removeFromQueue := func(delay time.Duration) {
-		time.Sleep(delay)
-		c.L.Lock()
-		queue = queue[1:]
-		fmt.Println("Removed from queue: " + strconv.Itoa(len(queue)))
-		c.L.Unlock()
-		c.Signal()
-	}
+removeFromQueue := func(delay time.Duration) {
+	time.Sleep(delay)
+	c.L.Lock()
+	queue = queue[1:]
+	fmt.Println("Removed from queue: " + strconv.Itoa(len(queue)))
+	c.L.Unlock()
+	c.Signal()
+}
 
-	for i := 0; i < 10; i++ {
-		c.L.Lock()
-		for len(queue) == 2 {
-			c.Wait()
-		}
-		fmt.Println("Adding to queue: " + strconv.Itoa(len(queue)))
-		queue = append(queue, struct{}{})
-		go removeFromQueue(1 * time.Second)
-		c.L.Unlock()
+for i := 0; i < 10; i++ {
+	c.L.Lock()
+	for len(queue) == 2 {
+		c.Wait()
 	}
+	fmt.Println("Adding to queue: " + strconv.Itoa(len(queue)))
+	queue = append(queue, struct{}{})
+	go removeFromQueue(1 * time.Second)
+	c.L.Unlock()
+}
 ```
 
-こちらの条件式が真になるまでは `removeFromQueue` 関数は実行されない  
-
-Condの`Wait()`が呼び出されると、main goroutineは条件のシグナルが送出されるまで一時停止される  
+普通、`removeFromQueue`の実行よりもmain goroutine のfor文の実行スピードの方が速い  
+しかし、以下の条件文で`Wait`が呼び出されると、main goroutineは条件のシグナルが送出されるまで一時停止される  
  
 ```go
 for len(queue) == 2 {
