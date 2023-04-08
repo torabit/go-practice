@@ -1,3 +1,4 @@
+<a id="anchor0"></a>
 # The sync Package
 * [1. WaitGroup](#anchor1)
 * [2. Mutex and RWMutex](#anchor2)
@@ -58,7 +59,9 @@ goroutineはスケジュールされるタイミングに関して何も保証�
 All goroutines complete.
 ```
 > **Note**  
-> 最後の`All goroutines complete.`以外は順不同で表示される。
+> 最後の`All goroutines complete.`以外は順不同で表示される。  
+
+[Back to Top](#anchor0)  
 
 <a id="anchor3"></a>
 ## 3. Cond
@@ -133,4 +136,6 @@ Adding to queue: 1
 > また、新たに1つのアイテムをキューに追加する前に少なくとも1つの要素がキューから取り出されるのを待ちます。  
 
 > **Note**  
-> シグナルが送出されるまでは main goroutine が一時停止されるため
+> シグナルが送出されるまでは main goroutine が一時停止されるため  
+
+[Back to Top](#anchor0)
