@@ -1,5 +1,3 @@
-# Go's Concurrency Building Blocks
-
 ## Goroutine
 
 ### Goroutineの中でClosureを実行するとどうなるか
