@@ -69,7 +69,7 @@ All goroutines complete.
 ## 2. Mutex and RWMutex
 
 > プログラム内のクリティカルセクションを保護する方法の1つです。...
-> Mutexは並行処理で安全な方法でこれらの共有リソースに対する排他的アクセスを提供しています。[1](#quote1)
+> Mutexは並行処理で安全な方法でこれらの共有リソースに対する排他的アクセスを提供しています。[[1]](#quote1)
 
 ### Mutex
 ### Sample code
