@@ -1,4 +1,4 @@
-## Goroutine
+# Goroutine
 
 ### Goroutineの中でClosureを実行するとどうなるか
 ```go
