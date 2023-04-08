@@ -1,12 +1,12 @@
 # The sync Package
-1. [WaitGroup](#anchor1)
-1. [Mutex and RWMutex](#anchor2)
-1. [Cond](#anchor3)
-1. [Once](#anchor4)
-1. [Pool](#anchor5)
+* [1. WaitGroup](#anchor1)
+* [2. Mutex and RWMutex](#anchor2)
+* [3. Cond](#anchor3)
+* [4. Once](#anchor4)
+* [5. Pool](#anchor5)
 
 <a id="anchor1"></a>
-# WaitGroup
+## WaitGroup
 > WaitGroupはひとまとまりの並行処理があったとき、その結果を気にしない、
 > もしくは他に結果を収集する手段がある場合に、それらの処理の完了を待つ手段として非常に有効です。  
 
@@ -46,7 +46,7 @@ All goroutines complete.
 ```
 
 <a id="anchor3"></a>
-# Cond
+## Cond
 
 > ゴルーチンが待機したりイベントの発生を知らせるためのランデブーポイントです。  
 
