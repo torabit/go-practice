@@ -122,7 +122,7 @@ fmt.Println("Arithmetic complete")
 
 ### RWMutex
 > **Note**  
-> RWMutexの説明では簡単のためSample codeを省略します。
+> RWMutexの説明では記述量を減らすためSample codeを省略します。
 
 `RWMutex`は、複数のスレッドが同時に読み込み(共有アクセス)できるようにするための`Mutex`。  
 読み込みアクセスはクリティカルセクションではないため、複数のスレッドが同時に`RWMutex`を読み込むことが可能。  
