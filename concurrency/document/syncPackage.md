@@ -65,6 +65,82 @@ All goroutines complete.
 
 [Back to Top](#anchor0)  
 
+<a id="anchor2"></a>
+## 2. Mutex and RWMutex
+
+> プログラム内のクリティカルセクションを保護する方法の1つです。...
+> Mutexは並行処理で安全な方法でこれらの共有リソースに対する排他的アクセスを提供しています。[1](#quote1)
+
+### Mutex
+### Sample code
+```go
+var count int
+var lock sync.Mutex
+
+increment := func() {
+  lock.Lock() // クリティカルセクションの占有を要求
+  defer lock.Unlock() // クリティカルセクションの処理が終了したことを通知
+  count++
+  fmt.Printf("Incrementing: %d\n", count)
+}
+
+decrement := func() {
+  lock.Lock()
+  defer lock.Unlock()
+  count--
+  fmt.Printf("Decrementing: %d\n", count)
+}
+
+var wg sync.WaitGroup
+
+const numIncrements = 5
+wg.Add(numIncrements)
+for i := 0; i <= 5; i++ {
+  go func() {
+    defer wg.Done()
+    increment()
+  }()
+}
+
+const numDecrements = 5
+wg.Add(numDecrements)
+for i := 0; i <= 5; i++ {
+  go func() {
+    defer wg.Done() 
+    decrement()
+  }()
+}
+
+wg.Wait()
+
+fmt.Println("Arithmetic complete")
+```
+
+`Mutex`は、排他的なアクセス(クリティカルセクション)を制御するために使用される。  
+つまり、同時に1つのスレッドだけが`Mutex`をロックし、そのリソースにアクセスすることができる。  
+ほかのスレッドは`Mutex`が解放されるのを待たなければならない。  
+これにより競合状態を回避することを実現している。  
+
+### RWMutex
+> **Note**  
+> RWMutexの説明では簡単のためSample codeを省略します。
+
+`RWMutex`は、複数のスレッドが同時に読み込み(共有アクセス)できるようにするための`Mutex`。  
+読み込みアクセスはクリティカルセクションではないため、複数のスレッドが同時に`RWMutex`を読み込むことが可能。  
+しかし、書き込みアクセスは`Mutex`同様クリティカルセクションのため、`RWMutex`を書き込むスレッドがロックを取得するまで、ほかのスレッドを待つ必要がある。  
+つまり、`RWMutex`は読み込み多重化を可能にし、並列性を向上させる。  
+`RWMutex`は読み込みが頻繁に行われるが、書き込みが比較的に稀なプログラムに有用。  
+例えば、大量の読み込み処理を行うバックエンドとか……(経験がなさ過ぎて例が思い浮かびません！)
+
+### 結論
+`RWMutex`は、読み込み操作に対しては複数のスレッドが同時にアクセスできるようにし、
+書き込み操作に対してはクリティカルセクションの占有を要求することで、並列性を向上させる。
+書き込み操作が頻繁に行われる場合には、`Mutex`などの排他的ロックを使用するべき。
+(クリティカルセクションがどのような処理を行っているかによる)  
+
+
+[Back to Top](#anchor0)
+
 <a id="anchor3"></a>
 ## 3. Cond
 
