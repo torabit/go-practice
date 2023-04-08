@@ -6,7 +6,7 @@
 * [5. Pool](#anchor5)
 
 <a id="anchor1"></a>
-## WaitGroup
+## 1. WaitGroup
 > WaitGroupはひとまとまりの並行処理があったとき、その結果を気にしない、
 > もしくは他に結果を収集する手段がある場合に、それらの処理の完了を待つ手段として非常に有効です。  
 
@@ -46,7 +46,7 @@ All goroutines complete.
 ```
 
 <a id="anchor3"></a>
-## Cond
+## 3. Cond
 
 > ゴルーチンが待機したりイベントの発生を知らせるためのランデブーポイントです。  
 
