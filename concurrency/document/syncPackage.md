@@ -1,3 +1,4 @@
+<a id="anchor0"></a>
 # The sync Package
 * [1. WaitGroup](#anchor1)
 * [2. Mutex and RWMutex](#anchor2)
@@ -8,13 +9,15 @@
 <a id="anchor1"></a>
 ## 1. WaitGroup
 > WaitGroupはひとまとまりの並行処理があったとき、その結果を気にしない、
-> もしくは他に結果を収集する手段がある場合に、それらの処理の完了を待つ手段として非常に有効です。  
+> もしくは他に結果を収集する手段がある場合に、それらの処理の完了を待つ手段として非常に有効です。[[1]](#quote1)  
+
+
 
 ### Sample code
 ```go
 var wg sync.WaitGroup
 
-wg.Add(1) // 引数に渡された回数分カウンターを増やす
+wg.Add(1) // 引数に渡された整数だけカウンターを増やす
 go func() {
 	defer wg.Done() // カウンターを1つ減らす
 	fmt.Println("1st goroutine sleeping...")
@@ -32,23 +35,40 @@ wg.Wait() // カウンターが0になるまでブロックする
 fmt.Println("All goroutines complete.")
 ```
 
-`Add`の呼び出しは監視対象のgoroutineの外で行うこと、そうしないと競合状態を引き起こしてしまう  
-goroutineはスケジュールされるタイミングに関して何も保証がないため、  
-goroutineを開始する前に`Wait`の呼び出しが起きてしまう可能性がある。  
+1個のgoroutineが起動したことを表している。  
+
+```go
+wg.Add(1)
+```
+
+Doneをdeferキーワードを使って呼び出す。  
+これによって、たとえpanicになったとしても確実にWaitGroupに終了することを伝える。  
+
+```go
+defer wg.Done()
+```
+
+***
+
+`Add`の呼び出しは監視対象のgoroutineの外で行うこと。そうしないと競合状態を引き起こしてしまう。  
+goroutineはスケジュールされるタイミングに関して何も保証がないため、goroutineを開始する前に`Wait`の呼び出しが起きてしまう可能性がある。  
 
 ### Result
-> **Note**  
-> 最後の`All goroutines complete.`以外は順不同で表示される
+
 ```zsh
 2nd goroutine sleeping...
 1st goroutine sleeping...
 All goroutines complete.
 ```
+> **Note**  
+> 最後の`All goroutines complete.`以外は順不同で表示される。  
+
+[Back to Top](#anchor0)  
 
 <a id="anchor3"></a>
 ## 3. Cond
 
-> ゴルーチンが待機したりイベントの発生を知らせるためのランデブーポイントです。  
+> ゴルーチンが待機したりイベントの発生を知らせるためのランデブーポイントです。[[1]](#quote1)  
 
 ### Sample code
 
@@ -115,7 +135,13 @@ Adding to queue: 1
 Removed from queue: 1
 Adding to queue: 1
 ```
-> また、新たに1つのアイテムをキューに追加する前に少なくとも1つの要素がキューから取り出されるのを待ちます。  
+> また、新たに1つのアイテムをキューに追加する前に少なくとも1つの要素がキューから取り出されるのを待ちます。[[1]](#quote1)  
 
 > **Note**  
-> シグナルが送出されるまでは main goroutine が一時停止されるため
+> シグナルが送出されるまでは main goroutine が一時停止されるため  
+
+[Back to Top](#anchor0)
+
+## 参考文献
+<a id="quote1">[1]</a>
+<cite>[Go言語による並行処理](https://www.oreilly.co.jp/books/9784873118468/)</cite>
