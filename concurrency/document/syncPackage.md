@@ -14,7 +14,7 @@
 ```go
 var wg sync.WaitGroup
 
-wg.Add(1) // 引数に渡された回数分カウンターを増やす
+wg.Add(1) // 引数に渡された整数だけカウンターを増やす
 go func() {
 	defer wg.Done() // カウンターを1つ減らす
 	fmt.Println("1st goroutine sleeping...")
@@ -31,14 +31,22 @@ go func() {
 wg.Wait() // カウンターが0になるまでブロックする
 fmt.Println("All goroutines complete.")
 ```
-
-`Add`の呼び出しは監視対象のgoroutineの外で行うこと、そうしないと競合状態を引き起こしてしまう  
-goroutineはスケジュールされるタイミングに関して何も保証がないため、  
-goroutineを開始する前に`Wait`の呼び出しが起きてしまう可能性がある。  
+```go
+wg.Add(n)
+```
+n個のgoroutineが起動したことを表している。  
+```go
+defer wg.Done()
+```
+Doneをdeferキーワードを使って呼び出す。  
+これによって、たとえpanicになったとしても確実にWaitGroupに終了することを伝える。  
+***
+`Add`の呼び出しは監視対象のgoroutineの外で行うこと。そうしないと競合状態を引き起こしてしまう。  
+goroutineはスケジュールされるタイミングに関して何も保証がないため、goroutineを開始する前に`Wait`の呼び出しが起きてしまう可能性がある。  
 
 ### Result
 > **Note**  
-> 最後の`All goroutines complete.`以外は順不同で表示される
+> 最後の`All goroutines complete.`以外は順不同で表示される。
 ```zsh
 2nd goroutine sleeping...
 1st goroutine sleeping...
