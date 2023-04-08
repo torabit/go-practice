@@ -31,27 +31,34 @@ go func() {
 wg.Wait() // カウンターが0になるまでブロックする
 fmt.Println("All goroutines complete.")
 ```
+
+1個のgoroutineが起動したことを表している。  
+
 ```go
-wg.Add(n)
+wg.Add(1)
 ```
-n個のgoroutineが起動したことを表している。  
+
+Doneをdeferキーワードを使って呼び出す。  
+これによって、たとえpanicになったとしても確実にWaitGroupに終了することを伝える。  
+
 ```go
 defer wg.Done()
 ```
-Doneをdeferキーワードを使って呼び出す。  
-これによって、たとえpanicになったとしても確実にWaitGroupに終了することを伝える。  
+
 ***
+
 `Add`の呼び出しは監視対象のgoroutineの外で行うこと。そうしないと競合状態を引き起こしてしまう。  
 goroutineはスケジュールされるタイミングに関して何も保証がないため、goroutineを開始する前に`Wait`の呼び出しが起きてしまう可能性がある。  
 
 ### Result
-> **Note**  
-> 最後の`All goroutines complete.`以外は順不同で表示される。
+
 ```zsh
 2nd goroutine sleeping...
 1st goroutine sleeping...
 All goroutines complete.
 ```
+> **Note**  
+> 最後の`All goroutines complete.`以外は順不同で表示される。
 
 <a id="anchor3"></a>
 ## 3. Cond
