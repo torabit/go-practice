@@ -1,15 +1,15 @@
-<a id="anchor0"></a>
+<a id="contents"></a>
 # The sync Package
-* [1. WaitGroup](#anchor1)
-* [2. Mutex and RWMutex](#anchor2)
-* [3. Cond](#anchor3)
-* [4. Once](#anchor4)
-* [5. Pool](#anchor5)
+* [1. WaitGroup](#content_wait_group)
+* [2. Mutex and RWMutex](#content_mutex_and_rwmutex)
+* [3. Cond](#content_cond)
+* [4. Once](#content_once)
+* [5. Pool](#content_pool)
 
-<a id="anchor1"></a>
+<a id="content_wait_group"></a>
 ## 1. WaitGroup
 > WaitGroupはひとまとまりの並行処理があったとき、その結果を気にしない、
-> もしくは他に結果を収集する手段がある場合に、それらの処理の完了を待つ手段として非常に有効です。[[1]](#quote1)  
+> もしくは他に結果を収集する手段がある場合に、それらの処理の完了を待つ手段として非常に有効です。[[1]](#quote_concurrency_in_go)  
 
 
 
@@ -63,13 +63,13 @@ All goroutines complete.
 > **Note**  
 > 最後の`All goroutines complete.`以外は順不同で表示される。  
 
-[Back to Top](#anchor0)  
+[Back to Top](#contents)  
 
-<a id="anchor2"></a>
+<a id="content_mutex_and_rwmutex"></a>
 ## 2. Mutex and RWMutex
 
 > プログラム内のクリティカルセクションを保護する方法の1つです。...  
-> Mutexは並行処理で安全な方法でこれらの共有リソースに対する排他的アクセスを提供しています。[[1]](#quote1)
+> Mutexは並行処理で安全な方法でこれらの共有リソースに対する排他的アクセスを提供しています。[[1]](#quote_concurrency_in_go)
 
 ### Mutex
 ### Sample code
@@ -138,12 +138,12 @@ fmt.Println("Arithmetic complete")
 (クリティカルセクションがどのような処理を行っているかによる)  
 
 
-[Back to Top](#anchor0)
+[Back to Top](#contents)
 
-<a id="anchor3"></a>
+<a id="content_cond"></a>
 ## 3. Cond
 
-> ゴルーチンが待機したりイベントの発生を知らせるためのランデブーポイントです。[[1]](#quote1)  
+> ゴルーチンが待機したりイベントの発生を知らせるためのランデブーポイントです。[[1]](#quote_concurrency_in_go)  
 
 ### Sample code
 
@@ -210,13 +210,13 @@ Adding to queue: 1
 Removed from queue: 1
 Adding to queue: 1
 ```
-> また、新たに1つのアイテムをキューに追加する前に少なくとも1つの要素がキューから取り出されるのを待ちます。[[1]](#quote1)  
+> また、新たに1つのアイテムをキューに追加する前に少なくとも1つの要素がキューから取り出されるのを待ちます。[[1]](#quote_concurrency_in_go)  
 
 > **Note**  
 > シグナルが送出されるまでは main goroutine が一時停止されるため  
 
-[Back to Top](#anchor0)
+[Back to Top](#contents)
 
 ## 参考文献
-<a id="quote1">[1]</a>
+<a id="quote_concurrency_in_go">[1]</a>
 <cite>[Go言語による並行処理](https://www.oreilly.co.jp/books/9784873118468/)</cite>
