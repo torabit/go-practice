@@ -217,6 +217,32 @@ Adding to queue: 1
 
 [Back to Top](#contents)
 
+<a id="content_once"></a>
+## Once  
+
+> sync.Onceは内部的にsyncの何らかのプリミティブを使って、Doに渡された関数がたとえ
+異なるゴルーチンで呼ばれたとしても一度しか実行されないようにする型です。
+
+### Sample code  
+
+```go
+var count int
+increment := func() { count++ }
+decrement := func() { count-- }
+
+var once sync.Once
+once.Do(increment)
+once.Do(decrement)
+
+fmt.Printf("Count: %d\n", count)
+```
+sync.OnceはDoが呼び出された回数だけを数えているため、結果は以下のようになる。  
+
+### Result
+
+```zsh
+Count: 1
+```
 ## 参考文献
 <a id="quote_concurrency_in_go">[1]</a>
 <cite>[Go言語による並行処理](https://www.oreilly.co.jp/books/9784873118468/)</cite>
